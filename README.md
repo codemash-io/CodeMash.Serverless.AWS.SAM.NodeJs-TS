@@ -7,7 +7,7 @@ Read official AWS SAM documentation in [README.AWS.md](README.AWS.md)
 You can initiate this SAM template with the following command. If you have already done so, please skip this command and go to the build section.
 
 ```bash
-sam init --location gh:yourusername/my-sam-template
+sam init --location gh:codemash-io/CodeMash.Serverless.AWS.SAM.NodeJs-TS
 ```
 
 ## Build
@@ -45,8 +45,8 @@ Please refer to our documentation [here](https://docs.codemash.io/api/prerequisi
 Reg
 
 ```bash
-sam deploy
-  --tags "codemash:accountid=090f4408-30ef-4a8d-8f99-9d97b174d952 codemash:projectid=a81050d8-170a-43bb-8099-a9ac53861b86"
-  --s3-bucket cm-a81050d8-170a-43bb-8099-a9ac53861b86
+sam deploy \
+  --tags "codemash:accountid=090f4408-30ef-4a8d-8f99-9d97b174d952 codemash:projectid=a81050d8-170a-43bb-8099-a9ac53861b86" \
+  --s3-bucket cm-a81050d8-170a-43bb-8099-a9ac53861b86 \
   --region eu-central-1
 ```
