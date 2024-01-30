@@ -10,6 +10,28 @@ You can initiate this SAM template with the following command. If you have alrea
 sam init --location gh:codemash-io/CodeMash.Serverless.AWS.SAM.NodeJs-TS
 ```
 
+### CodeMash setup
+
+Change CodeMash environment variables in [template.yaml](template.yaml) like `CODEMASH_API_URL`, `CODEMASH_PROJECT_ID`, and `CODEMASH_API_KEY` with your personal credentials that you obtain from the CodeMash Cloud dashboard. Refer to [this link](https://docs.codemash.io/api/prerequisites) for more information.
+
+```yaml
+Globals:
+  Function:
+    Runtime: nodejs20.x
+    MemorySize: 128
+    Timeout: 180
+    Architectures:
+      - arm64
+    AutoPublishAlias: live
+    CodeUri: src/
+    Environment:
+      Variables:
+        STAGE: Production
+        CODEMASH_API_URL: https://api.codemash.io/v2 # change to yours personal url
+        CODEMASH_PROJECT_ID: _your_project_id_ # change to yours personal project id
+        CODEMASH_API_KEY: _your_api_key_ # change to yours personal api key
+```
+
 ## Build
 
 Every time you update the code, you need to rebuild it.

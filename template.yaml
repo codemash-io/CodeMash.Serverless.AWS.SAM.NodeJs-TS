@@ -18,7 +18,9 @@ Globals:
     Environment:
       Variables:
         STAGE: Production
-        TABLE_NAME: data-table
+        CODEMASH_API_URL: https://api.codemash.io/v2 # change to yours personal url
+        CODEMASH_PROJECT_ID: _your_project_id_ # change to yours personal project id
+        CODEMASH_API_KEY: _your_api_key_ # change to yours personal api key
 
 Resources:
   ExampleFunction:
