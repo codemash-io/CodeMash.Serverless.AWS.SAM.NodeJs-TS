@@ -15,11 +15,14 @@ lint = true
 
 [default.deploy.parameters]
 stack_name = "codemash"
+s3_bucket = "cm-a81050d8-170a-43bb-8099-a9ac53861b86"
 s3_prefix = "cm-lambda-deployments"
 capabilities = "CAPABILITY_IAM"
 confirm_changeset = true
 resolve_s3 = false
 region = "us-west-2"
+tags = "codemash:accountid=090f4408-30ef-4a8d-8f99-9d97b174d952,codemash:projectid=a81050d8-170a-43bb-8099-a9ac53861b86"
+
 
 [default.package.parameters]
 resolve_s3 = true
