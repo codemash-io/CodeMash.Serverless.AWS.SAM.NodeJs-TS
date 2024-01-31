@@ -33,7 +33,7 @@ In order to avoid having to remember the deploy command ...
 
 ```bash
 sam deploy \
-  --tags "codemash:accountid=090f4408-30ef-4a8d-8f99-9d97b174d952 codemash:projectid=a81050d8-170a-43bb-8099-a9ac53861b86" \
+  --tags "codemash:account-id=090f4408-30ef-4a8d-8f99-9d97b174d952 codemash:project-id=a81050d8-170a-43bb-8099-a9ac53861b86" \
   --s3-bucket cm-a81050d8-170a-43bb-8099-a9ac53861b86 \
   --region eu-central-1
 ```
@@ -47,10 +47,10 @@ You can obtain CodeMash project id and account id from [here](https://docs.codem
 ```bash
 [default.deploy.parameters]
 stack_name = "codemash" # change if such stack has already been set before
-s3_bucket = "cm-{project_id}" # change to yours
+s3_bucket = "cm-{_your_project_id_}" # change to yours
 s3_prefix = "cm-lambda-deployments"
 region = "us-west-2"
-tags = "codemash:accountid={account_id},codemash:projectid={project_id}" # change to yours
+tags = "codemash:account-id={_your_account_id_},codemash:project-id={_your_project_id_}" # change to yours
 capabilities = "CAPABILITY_IAM"
 resolve_s3 = false
 confirm_changeset = true
@@ -106,10 +106,14 @@ Examples are provided using the [TypeScript](https://docs.codemash.io/sdk/typesc
 
 #### Call function from code:
 
+Let's say you have deployed a Lambda function that calculates the final price of the service or product you are selling.
+Assume your Lambda function is integrated with CodeMash and has the ID A3282587-1E69-4CF1-9610-201CC0640BF8.
+The Lambda code looks something like this:
+
 ```ts
 import { code } from 'codemash';
 
-export async function calculatePrice(request) {
+async function calculatePrice(request) {
   const response = await code.executeFunction({
       functionId: "A3282587-1E69-4CF1-9610-201CC0640BF8",
       data: { ...request },
@@ -121,7 +125,34 @@ const priceResponse = await calculatePrice(
   {
     basePrice: 20.15,
     calculateVat: true,
-    includeFee: false
+    includeFee: false,
+    country: "lt"
+  });
+```
+
+This function examines the CodeMash taxonomies and retrieves the VAT rate based on the country code you provide.
+If a fee needs to be calculated, it retrieves it from the environment variables defined for the function, or sets it to a default of 10%.
+The function then returns the final price calculated.
+
+Let's call that function from your app (mobile app, web app, script, etc.).
+
+```ts
+import { code } from 'codemash';
+
+async function calculatePrice(request) {
+  const response = await code.executeFunction({
+      functionId: "A3282587-1E69-4CF1-9610-201CC0640BF8",
+      data: { ...request },
+  });
+  return response;
+});
+
+const priceResponse = await calculatePrice(
+  {
+    basePrice: 20.15,
+    calculateVat: true,
+    includeFee: false,
+    country: "lt"
   });
 ```
 
