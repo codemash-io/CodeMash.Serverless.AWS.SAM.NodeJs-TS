@@ -60,11 +60,9 @@ If you have specific environments defined like `dev`, `prod` you can use e.g.: `
 
 - **Tags**: You need to pass the account ID and project ID to the tags. That's how CodeMash can find lambda functions dedicated to CodeMash.
 
-- **S3 Bucket**: The deployment bucket facilitates lambda deployments. You can specify the `--s3-bucket` parameter as `cm-{projectId}`. For example, if your project ID is `a81050d8-170a-43bb-8099-a9ac53861b86`, you would specify `--s3-bucket cm-a81050d8-170a-43bb-8099-a9ac53861b86` in the `sam deploy` command. Alternatively, you can set `resolve_s3` to `true` in the `samconfig.toml` file.
+- **S3 Bucket**: The deployment bucket facilitates lambda deployments. You can specify the `s3-bucket` parameter as `cm-{projectId}`. For example, if your project ID is `a81050d8-170a-43bb-8099-a9ac53861b86`, you would specify `s3-bucket = cm-a81050d8-170a-43bb-8099-a9ac53861b86`. Alternatively, you can set `resolve_s3` to `true` to have dynamically picked S3 bucket for your deployments.
 
 - **Region**: Specify the region where the lambda will be deployed. Consider where the CodeMash cluster resides for better performance and lower costs.
-
-Please refer to our documentation [here](https://docs.codemash.io/api/prerequisites) for more information.
 
 #### template.yaml
 
@@ -118,6 +116,13 @@ export async function calculatePrice(request) {
   });
   return response;
 });
+
+const priceResponse = await calculatePrice(
+  {
+    basePrice: 20.15,
+    calculateVat: true,
+    includeFee: false
+  });
 ```
 
 #### Call function from Membership trigger:
